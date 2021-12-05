@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <EditText
+        android:id="@+id/edtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="250dp"
+        android:hint="Enter your email address"
+        android:textSize="25sp" />
+
+    <EditText
+        android:id="@+id/edtPwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtEmail"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="12dp"
+        android:hint="Enter your password"
+        android:textSize="25sp"
+        android:inputType="textPassword"/>
+
+    <EditText
+        android:id="@+id/edtConfirmPwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtPwd"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="12dp"
+        android:hint="Confirm your password"
+        android:inputType="textPassword"
+        android:textSize="25sp"/>
+
+    <com.gc.materialdesign.views.ButtonRectangle
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtConfirmPwd"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="20dp"
+        android:text = "Register"
+        android:background="@color/colorPrimary"
+        android:textSize = "10sp"
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

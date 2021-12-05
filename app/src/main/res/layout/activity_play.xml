@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding"
+    android:weightSum="20">
+
+  <uni.minesweeper.view.MinesweeperView
+      android:id="@+id/minesweeperView"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="19" />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:weightSum="2"
+      android:layout_weight="1"
+      tools:ignore="NestedWeights">
+
+    <ToggleButton
+        android:id="@+id/btnToggleMode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/mode"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/btnNewGame"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/new_game"
+        tools:ignore="ButtonStyle"
+        android:layout_weight="1" />
+  </LinearLayout>
+</LinearLayout>
