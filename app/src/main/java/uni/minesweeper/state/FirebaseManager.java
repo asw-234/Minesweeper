@@ -12,6 +12,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 
 public class FirebaseManager {
   private static final String DB_ENDPOINT = "https://bmeminesweeperhw-default-rtdb.europe-west1.firebasedatabase.app/";
@@ -54,6 +56,18 @@ public class FirebaseManager {
 
   public void performLogin(final String email, final String password, final OnCompleteListener<AuthResult> callback) {
     firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(callback);
+  }
+
+  public void performRegistration(final String email, final String password, final OnCompleteListener<AuthResult> callback) {
+    firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+      if (task.isSuccessful()) {
+        user = new UserClass(email, "15");
+        final String userUID = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+        firebaseDatabase.getReference().child("users").child(userUID).setValue(user);
+      }
+
+      callback.onComplete(task);
+    });
   }
 
   public UserClass getUser() {
