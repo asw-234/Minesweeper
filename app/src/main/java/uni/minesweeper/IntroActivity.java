@@ -1,7 +1,6 @@
 package uni.minesweeper;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +28,7 @@ import java.util.Objects;
 
 import kotlin.Unit;
 import uni.minesweeper.model.MinesweeperModel;
+import uni.minesweeper.state.UserClass;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -109,17 +109,14 @@ public class IntroActivity extends AppCompatActivity {
     final IntroActivity _this = this;
     final MinesweeperModel model = MinesweeperModel.getSingletonInstance();
 
-    btnPlay.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        model.setSize(boardSize);
-        model.setTotalMines(totalMines);
-        model.resetModel();
-        Intent intent = new Intent(_this, PlayActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("user_key", userUID);
-        startActivity(intent);
-      }
+    btnPlay.setOnClickListener(v -> {
+      model.setSize(boardSize);
+      model.setTotalMines(totalMines);
+      model.resetModel();
+      Intent intent1 = new Intent(_this, PlayActivity.class);
+      intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+      intent1.putExtra("user_key", userUID);
+      startActivity(intent1);
     });
   }
 

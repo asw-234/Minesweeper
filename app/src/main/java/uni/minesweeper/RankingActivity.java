@@ -2,13 +2,11 @@ package uni.minesweeper;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 
 import com.google.firebase.database.DataSnapshot;
@@ -18,11 +16,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import uni.minesweeper.adapter.RecyclerAdapter;
+import uni.minesweeper.state.UserClass;
 
 public class RankingActivity extends AppCompatActivity {
 
@@ -43,14 +40,13 @@ public class RankingActivity extends AppCompatActivity {
 
     final Intent intent = getIntent();
     userUID = intent.getStringExtra("user_key");
-    firebaseDatabase = FirebaseDatabase.getInstance("https://bmeminesweeperhw-default-rtdb.europe-west1.firebasedatabase.app/");
 
     recyclerView = findViewById(R.id.recyclerID);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     readUsersFromFirebase();
 
     btnBack = findViewById(R.id.ibBack);
-    btnBack.setOnClickListener(v -> {
+    btnBack.setOnClickListener(view -> {
       Intent backIntent = new Intent(RankingActivity.this, IntroActivity.class);
       backIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
       backIntent.putExtra("user_key", userUID);

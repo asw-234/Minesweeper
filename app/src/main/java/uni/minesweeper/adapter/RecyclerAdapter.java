@@ -8,11 +8,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Collections;
 import java.util.List;
 
 import uni.minesweeper.R;
-import uni.minesweeper.UserClass;
+import uni.minesweeper.state.UserClass;
 
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {

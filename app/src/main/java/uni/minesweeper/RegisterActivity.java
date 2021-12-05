@@ -17,11 +17,10 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import uni.minesweeper.state.UserClass;
+
 public class RegisterActivity extends AppCompatActivity {
-  private static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(
-    "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
-    Pattern.CASE_INSENSITIVE
-  );
+
 
   private EditText inputEmail;
   private EditText inputPassword;
@@ -58,16 +57,16 @@ public class RegisterActivity extends AppCompatActivity {
     final String pwd = inputPassword.getText().toString();
     final String cnfmPwd = confirmPwd.getText().toString();
 
-    if (!validateRegex(email, VALID_EMAIL_ADDRESS_REGEX)) {
+    if (!Utils.validateEmail(email)) {
       inputEmail.setError("Enter valid email address*");
-    } else if (pwd.isEmpty() || pwd.length() < 6) {
+    } else if (pwd.length() < 6) {
       inputPassword.setError("Enter valid password*");
     } else if (!pwd.equals(cnfmPwd)) {
       confirmPwd.setError("No match with previous password*");
     } else {
       firebaseAuth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(task -> {
         if (task.isSuccessful()) {
-          user = new UserClass(email, pwd, "15");
+          user = new UserClass(email, "15");
           databaseReference.child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).setValue(user);
           passUserToNextActivity();
           Toast.makeText(RegisterActivity.this, "Successful Registration", Toast.LENGTH_SHORT).show();
@@ -84,8 +83,4 @@ public class RegisterActivity extends AppCompatActivity {
     startActivity(intent);
   }
 
-  public static boolean validateRegex(String emailStr, Pattern validRegex) {
-    Matcher matcher = validRegex.matcher(emailStr);
-    return matcher.find();
-  }
 }
