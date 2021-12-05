@@ -1,7 +1,6 @@
 package uni.minesweeper;
 
 import android.content.Intent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ToggleButton;
 
@@ -27,7 +26,7 @@ public class PlayActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_play);
 
-    model = MinesweeperModel.getSingletonInstance();
+    model = MinesweeperModel.getInstance();
     final ToggleButton btnToggleMode = findViewById(R.id.btnToggleMode);
 
     if (savedInstanceState != null) {

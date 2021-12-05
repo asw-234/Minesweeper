@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uni.minesweeper.adapter.RecyclerAdapter;
-import uni.minesweeper.state.UserClass;
+import uni.minesweeper.database.UserClass;
 
 public class RankingActivity extends AppCompatActivity {
 

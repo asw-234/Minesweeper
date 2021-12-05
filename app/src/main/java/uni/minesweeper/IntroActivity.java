@@ -28,7 +28,7 @@ import java.util.Objects;
 
 import kotlin.Unit;
 import uni.minesweeper.model.MinesweeperModel;
-import uni.minesweeper.state.UserClass;
+import uni.minesweeper.database.UserClass;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -107,7 +107,7 @@ public class IntroActivity extends AppCompatActivity {
 
     final ButtonRectangle btnPlay = findViewById(R.id.btnPlay);
     final IntroActivity _this = this;
-    final MinesweeperModel model = MinesweeperModel.getSingletonInstance();
+    final MinesweeperModel model = MinesweeperModel.getInstance();
 
     btnPlay.setOnClickListener(v -> {
       model.setSize(boardSize);

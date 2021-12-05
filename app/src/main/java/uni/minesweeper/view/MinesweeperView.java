@@ -61,7 +61,7 @@ public class MinesweeperView extends View {
   public MinesweeperView(Context context, AttributeSet attrs) {
     super(context, attrs);
 
-    model = MinesweeperModel.getSingletonInstance();
+    model = MinesweeperModel.getInstance();
 
     bombDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_bomb, null);
     bombLossDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_explosion, null);

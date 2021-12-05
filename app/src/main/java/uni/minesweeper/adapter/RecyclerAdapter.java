@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import uni.minesweeper.R;
-import uni.minesweeper.state.UserClass;
+import uni.minesweeper.database.UserClass;
 
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {

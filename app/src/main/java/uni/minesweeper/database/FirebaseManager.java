@@ -1,4 +1,4 @@
-package uni.minesweeper.state;
+package uni.minesweeper.database;
 
 import androidx.annotation.NonNull;
 
