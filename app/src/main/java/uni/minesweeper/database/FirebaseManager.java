@@ -2,7 +2,7 @@ package uni.minesweeper.database;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -12,7 +12,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 
 public class FirebaseManager {
@@ -54,11 +58,17 @@ public class FirebaseManager {
     });
   }
 
-  public void performLogin(final String email, final String password, final OnCompleteListener<AuthResult> callback) {
-    firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(callback);
+  public void performLogin(final String email, final String password, final Callback<Task<AuthResult>> callback) {
+    firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+      if (task.isSuccessful()) {
+        FirebaseManager.getInstance().initUser();
+      }
+
+      callback.call(task);
+    });
   }
 
-  public void performRegistration(final String email, final String password, final OnCompleteListener<AuthResult> callback) {
+  public void performRegistration(final String email, final String password, final Callback<Task<AuthResult>> callback) {
     firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
       if (task.isSuccessful()) {
         user = new UserClass(email, "15");
@@ -66,9 +76,30 @@ public class FirebaseManager {
         firebaseDatabase.getReference().child("users").child(userUID).setValue(user);
       }
 
-      callback.onComplete(task);
+      callback.call(task);
     });
   }
+
+  public void fetchRankingUsers(final Callback<List<UserClass>> callback) {
+    firebaseDatabase.getReference().child("users").addValueEventListener(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot snapshot) {
+        final List<UserClass> userList =
+          StreamSupport.stream(snapshot.getChildren().spliterator(), false)
+          .map(snap -> snap.getValue(UserClass.class))
+          .sorted((u1, u2) -> u2.getScore().compareTo(Objects.requireNonNull(u1).getScore()))
+          .collect(Collectors.toList());
+
+        callback.call(userList);
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError error) {
+        callback.call(Collections.emptyList());
+      }
+    });
+  }
+
 
   public UserClass getUser() {
     return user;

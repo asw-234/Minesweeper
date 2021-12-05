@@ -43,9 +43,8 @@ public class PlayActivity extends AppCompatActivity {
       model.setFlagMode(isFlagMode);
     });
 
-    final PlayActivity _this = this;
     Button btnNewGame = findViewById(R.id.btnNewGame);
 
-    btnNewGame.setOnClickListener(v -> startActivity(new Intent(_this, IntroActivity.class)));
+    btnNewGame.setOnClickListener(v -> Utils.sendToActivity(this, IntroActivity.class, 0));
   }
 }

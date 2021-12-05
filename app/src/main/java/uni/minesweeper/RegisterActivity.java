@@ -1,5 +1,6 @@
 package uni.minesweeper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -39,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
     } else {
       FirebaseManager.getInstance().performRegistration(email, password, task -> {
         if (task.isSuccessful()) {
-          Utils.sendToActivity(this, IntroActivity.class);
+          Utils.sendToActivity(this, IntroActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
           Toast.makeText(RegisterActivity.this, "Successful Registration", Toast.LENGTH_SHORT).show();
         } else {
           Toast.makeText(RegisterActivity.this, "An error occurred", Toast.LENGTH_SHORT).show();

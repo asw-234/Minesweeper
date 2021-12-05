@@ -1,6 +1,7 @@
 package uni.minesweeper;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,27 +9,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
 import androidx.appcompat.widget.Toolbar;
 
 import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.views.ButtonRectangle;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.ramotion.fluidslider.FluidSlider;
-
-import java.util.Objects;
 
 import kotlin.Unit;
 import uni.minesweeper.model.MinesweeperModel;
-import uni.minesweeper.database.UserClass;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -38,13 +26,6 @@ public class IntroActivity extends AppCompatActivity {
 
   private int totalMines;
   private int boardSize;
-
-  private FirebaseAuth myAuth;
-  private FirebaseUser firebaseUser;
-  private FirebaseDatabase firebaseDatabase;
-  private DatabaseReference databaseReference;
-  private String userUID;
-  private UserClass user;
 
   @Override
   public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
@@ -59,14 +40,6 @@ public class IntroActivity extends AppCompatActivity {
     setContentView(R.layout.activity_intro);
     Toolbar toolbar = findViewById(R.id.toolbarID);
     setSupportActionBar(toolbar);
-
-    Intent intent = getIntent();
-    userUID = intent.getStringExtra("user_key");
-
-    myAuth = FirebaseAuth.getInstance();
-    firebaseUser = myAuth.getCurrentUser();
-    firebaseDatabase = FirebaseDatabase.getInstance("https://bmeminesweeperhw-default-rtdb.europe-west1.firebasedatabase.app/");
-    readUserFromFirebase();
 
     final TextView sizeTextView = findViewById(R.id.sizeTextView);
     final TextView minesTextView = findViewById(R.id.minesTextView);
@@ -106,17 +79,13 @@ public class IntroActivity extends AppCompatActivity {
     btnIncrease.setOnClickListener(createFloatBtnListener(true));
 
     final ButtonRectangle btnPlay = findViewById(R.id.btnPlay);
-    final IntroActivity _this = this;
     final MinesweeperModel model = MinesweeperModel.getInstance();
 
     btnPlay.setOnClickListener(v -> {
       model.setSize(boardSize);
       model.setTotalMines(totalMines);
       model.resetModel();
-      Intent intent1 = new Intent(_this, PlayActivity.class);
-      intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-      intent1.putExtra("user_key", userUID);
-      startActivity(intent1);
+      Utils.sendToActivity(this, PlayActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
     });
   }
 
@@ -138,26 +107,8 @@ public class IntroActivity extends AppCompatActivity {
 
   @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-    Intent intent = new Intent(IntroActivity.this, RankingActivity.class);
-    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-    intent.putExtra("user_key", Objects.requireNonNull(myAuth.getCurrentUser()).getUid());
-    startActivity(intent);
+    Utils.sendToActivity(this, RankingActivity.class, 0);
     return true;
   }
 
-  private void readUserFromFirebase() {
-    if (userUID != null) {
-      databaseReference = firebaseDatabase.getReference().child("users").child(userUID);
-      databaseReference.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-          user = snapshot.getValue(UserClass.class);
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-        }
-      });
-    }
-  }
 }

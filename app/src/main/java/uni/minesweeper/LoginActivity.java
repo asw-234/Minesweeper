@@ -1,5 +1,6 @@
 package uni.minesweeper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,7 +22,9 @@ public class LoginActivity extends AppCompatActivity {
     inputPassword = findViewById(R.id.edtLoginPwd);
 
     findViewById(R.id.btnLogin).setOnClickListener(view -> performLogin());
-    findViewById(R.id.createAccount).setOnClickListener(view -> Utils.sendToActivity(this, RegisterActivity.class));
+    findViewById(R.id.createAccount).setOnClickListener(view ->
+      Utils.sendToActivity(this, RegisterActivity.class, 0)
+    );
   }
 
   private void performLogin() {
@@ -35,8 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     } else {
       FirebaseManager.getInstance().performLogin(email, password, task -> {
         if (task.isSuccessful()) {
-          FirebaseManager.getInstance().initUser();
-          Utils.sendToActivity(this, IntroActivity.class);
+          Utils.sendToActivity(this, IntroActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
           Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
         } else {
           Toast.makeText(LoginActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();

@@ -16,9 +16,13 @@ public class Utils {
     return VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr).find();
   }
 
-  public static <T> void sendToActivity(final Context context, final Class<T> destinationClazz) {
-    Intent intent = new Intent(context, destinationClazz);
-    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+  public static <T> void sendToActivity(final Context context,
+                                        final Class<T> destActivityClass,
+                                        final int flags) {
+
+    Intent intent = new Intent(context, destActivityClass);
+    intent.setFlags(flags);
+
     context.startActivity(intent);
   }
 }
