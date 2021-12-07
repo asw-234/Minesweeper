@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import uni.minesweeper.database.FirebaseManager;
 
+
 public class RegisterActivity extends AppCompatActivity {
   private EditText inputEmail;
   private EditText inputPassword;
@@ -40,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     } else {
       FirebaseManager.getInstance().performRegistration(email, password, task -> {
         if (task.isSuccessful()) {
-          Utils.sendToActivity(this, IntroActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+          Utils.sendToActivity(this, MenuActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
           Toast.makeText(RegisterActivity.this, "Successful Registration", Toast.LENGTH_SHORT).show();
         } else {
           Toast.makeText(RegisterActivity.this, "An error occurred", Toast.LENGTH_SHORT).show();

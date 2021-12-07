@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     } else {
       FirebaseManager.getInstance().performLogin(email, password, task -> {
         if (task.isSuccessful()) {
-          Utils.sendToActivity(this, IntroActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+          Utils.sendToActivity(this, MenuActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
           Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
         } else {
           Toast.makeText(LoginActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();

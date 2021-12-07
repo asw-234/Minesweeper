@@ -4,8 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/bg_menu"
+    android:background="@drawable/bg_auth"
     tools:context=".RegisterActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:contentDescription="@string/logo"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/edtEmail"
@@ -13,14 +26,15 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="200dp"
-        android:hint="Enter your email address"
+        android:layout_marginTop="80dp"
+        android:hint="@string/enter_your_email_address"
         android:padding="5dp"
         android:textSize="25sp"
         android:background="#60FFFFFF"
-        android:autofillHints="emailAddress" />
+        android:autofillHints="emailAddress"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/edtPwd"
@@ -31,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edtEmail"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="12dp"
-        android:hint="Enter your password"
+        android:hint="@string/enter_your_password"
         android:inputType="textPassword"
         android:padding="5dp"
         android:textSize="25sp"
@@ -47,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edtPwd"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="12dp"
-        android:hint="Confirm your password"
+        android:hint="@string/confirm_your_password"
         android:inputType="textPassword"
         android:padding="5dp"
         android:textSize="25sp"
@@ -63,10 +77,10 @@
         app:layout_constraintTop_toBottomOf="@+id/edtConfirmPwd"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="20dp"
-        android:text = "Register"
-        android:background="@color/colorPrimary"
-        android:textSize = "10sp"
-        />
+        android:text="@string/register"
+        android:background="@color/buttonBg"
+        android:textSize="10sp"
+        tools:ignore="SmallSp" />
 
 
 
