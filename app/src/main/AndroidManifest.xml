@@ -16,12 +16,12 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
 
-        <activity android:name=".MenuActivity" android:screenOrientation="portrait" android:exported="false" tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".IntroActivity" android:screenOrientation="portrait" android:exported="false" tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".RankingActivity" android:screenOrientation="portrait" android:exported="false" tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".RegisterActivity" android:screenOrientation="portrait" android:exported="false" tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".PlayActivity" android:screenOrientation="portrait" android:exported="false" tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".LoginActivity" android:screenOrientation="portrait" android:exported="true" tools:ignore="LockedOrientationActivity">
+        <activity android:name=".activities.MenuActivity" android:screenOrientation="portrait" android:exported="false" tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".activities.play.IntroActivity" android:screenOrientation="portrait" android:exported="false" tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".activities.RankingActivity" android:screenOrientation="portrait" android:exported="false" tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".activities.auth.RegisterActivity" android:screenOrientation="portrait" android:exported="false" tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".activities.play.PlayActivity" android:screenOrientation="portrait" android:exported="false" tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".activities.auth.LoginActivity" android:screenOrientation="portrait" android:exported="true" tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

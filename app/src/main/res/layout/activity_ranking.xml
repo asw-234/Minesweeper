@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RankingActivity">
+    tools:context=".activities.RankingActivity">
 
     <ImageButton
         android:id="@+id/ibBack"
@@ -17,7 +17,8 @@
         app:layout_constraintBottom_toTopOf="@+id/recyclerID"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:contentDescription="@string/button_image" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -27,7 +28,7 @@
         android:background="@color/colorPrimary"
         android:paddingHorizontal="20dp"
         android:paddingVertical="13dp"
-        android:text="Ranking"
+        android:text="@string/ranking"
         android:textAlignment="textStart"
         android:textColor="#FFFFFF"
         android:textSize="25sp"

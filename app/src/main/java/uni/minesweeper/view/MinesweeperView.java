@@ -17,7 +17,8 @@ import androidx.core.content.res.ResourcesCompat;
 
 import com.gc.materialdesign.widgets.Dialog;
 
-import uni.minesweeper.IntroActivity;
+import uni.minesweeper.Utils;
+import uni.minesweeper.activities.play.IntroActivity;
 import uni.minesweeper.R;
 import uni.minesweeper.model.MinesweeperModel;
 
@@ -232,13 +233,7 @@ public class MinesweeperView extends View {
     dialog.show();
     dialog.getButtonAccept().setText(buttonText);
 
-    dialog.setOnAcceptButtonClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Intent toIntroActivity = new Intent(getContext(), IntroActivity.class);
-        toIntroActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // https://developer.android.com/reference/android/content/Intent.html#FLAG_ACTIVITY_NEW_TASK
-        getContext().startActivity(toIntroActivity);
-      }
-    });
+    dialog.setOnAcceptButtonClickListener(v ->
+      Utils.sendToActivity(getContext(), IntroActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
   }
 }

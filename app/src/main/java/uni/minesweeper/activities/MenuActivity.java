@@ -1,10 +1,16 @@
-package uni.minesweeper;
+package uni.minesweeper.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import uni.minesweeper.R;
+import uni.minesweeper.Utils;
+import uni.minesweeper.activities.RankingActivity;
+import uni.minesweeper.activities.auth.LoginActivity;
+import uni.minesweeper.activities.play.IntroActivity;
 
 public class MenuActivity extends AppCompatActivity {
 

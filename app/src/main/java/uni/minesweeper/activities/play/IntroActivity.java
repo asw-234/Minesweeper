@@ -1,4 +1,4 @@
-package uni.minesweeper;
+package uni.minesweeper.activities.play;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,9 @@ import com.gc.materialdesign.views.ButtonRectangle;
 import com.ramotion.fluidslider.FluidSlider;
 
 import kotlin.Unit;
+import uni.minesweeper.R;
+import uni.minesweeper.activities.RankingActivity;
+import uni.minesweeper.Utils;
 import uni.minesweeper.model.MinesweeperModel;
 
 public class IntroActivity extends AppCompatActivity {

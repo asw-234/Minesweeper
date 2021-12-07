@@ -19,4 +19,6 @@
     <string name="enter_your_password">Enter your password</string>
     <string name="confirm_your_password">Confirm your password</string>
     <string name="register">Register</string>
+    <string name="button_image">Button image</string>
+    <string name="ranking">Ranking</string>
 </resources>
