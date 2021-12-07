@@ -2,7 +2,7 @@
     <string name="app_name">Minesweeper</string>
     <string name="greetings">Please enter your board size:</string>
     <string name="board_size">Selected size: %1$sx%1$s</string>
-    <string name="mines">Select number of mines\n(min. 3)</string>
+    <string name="mines">Select number of mines: %1$s</string>
     <string name="play">PLAY!</string>
     <string name="mode">Mode: %1$s</string>
     <string name="new_game">New game</string>

@@ -1,5 +1,6 @@
 package uni.minesweeper.activities.play;
 
+import android.content.Intent;
 import android.widget.Button;
 import android.widget.ToggleButton;
 
@@ -47,6 +48,6 @@ public class PlayActivity extends AppCompatActivity {
 
     Button btnNewGame = findViewById(R.id.btnNewGame);
 
-    btnNewGame.setOnClickListener(v -> Utils.sendToActivity(this, IntroActivity.class, 0));
+    btnNewGame.setOnClickListener(v -> Utils.sendToActivity(this, IntroActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TOP));
   }
 }

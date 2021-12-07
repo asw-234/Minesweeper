@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding"
-    android:weightSum="20">
+    android:weightSum="20"
+    android:layout_centerVertical="true"
+    android:background="@drawable/bg_play">
 
   <uni.minesweeper.view.MinesweeperView
       android:id="@+id/minesweeperView"

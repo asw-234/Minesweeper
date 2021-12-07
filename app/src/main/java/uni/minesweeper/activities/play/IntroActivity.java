@@ -23,12 +23,15 @@ import uni.minesweeper.model.MinesweeperModel;
 
 public class IntroActivity extends AppCompatActivity {
 
-  private static final int BOARD_MAX_SIZE = 10;
+  private static final int BOARD_MAX_SIZE = 15;
   private static final int BOARD_MIN_SIZE = 5;
-  private static final int MINES_MIN = 3;
+  private static final int MINES_MIN = 1;
 
-  private int totalMines;
-  private int boardSize;
+  private static final int MINES_DEFAULT = 3;
+  private static final int SIZE_DEFAULT = 5;
+
+  private int totalMines = MINES_DEFAULT;
+  private int boardSize = SIZE_DEFAULT;
 
   @Override
   public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
@@ -52,10 +55,8 @@ public class IntroActivity extends AppCompatActivity {
       totalMines = savedInstanceState.getInt("totalMines");
     }
 
-    boardSize = (boardSize == 0) ? BOARD_MIN_SIZE : boardSize;
-    totalMines = (totalMines == 0) ? MINES_MIN : totalMines;
     sizeTextView.setText(getApplicationContext().getString(R.string.board_size, String.valueOf(boardSize)));
-    minesTextView.setText(String.valueOf(totalMines));
+    minesTextView.setText(getApplicationContext().getString(R.string.mines, String.valueOf(totalMines)));
 
     final FluidSlider sizeSlider = findViewById(R.id.sizeSlider);
     sizeSlider.setStartText(String.valueOf(BOARD_MIN_SIZE));
@@ -88,7 +89,7 @@ public class IntroActivity extends AppCompatActivity {
       model.setSize(boardSize);
       model.setTotalMines(totalMines);
       model.resetModel();
-      Utils.sendToActivity(this, PlayActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+      Utils.sendToActivity(this, PlayActivity.class, 0);
     });
   }
 
