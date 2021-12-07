@@ -4,38 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_dark"
     tools:context=".activities.RankingActivity">
-
-    <ImageButton
-        android:id="@+id/ibBack"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="46dp"
-        android:layout_height="58dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/colorPrimary"
-        android:src="@drawable/ic_back"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerID"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:contentDescription="@string/button_image" />
 
     <TextView
         android:id="@+id/tvTitle"
         style="?android:attr/borderlessButtonStyle"
-        android:layout_width="370dp"
-        android:layout_height="58dp"
-        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
         android:paddingHorizontal="20dp"
         android:paddingVertical="13dp"
-        android:text="@string/ranking"
-        android:textAlignment="textStart"
+        android:text="@string/leaderboard"
         android:textColor="#FFFFFF"
         android:textSize="25sp"
-        app:layout_constraintStart_toEndOf="@id/ibBack"
-        app:layout_constraintTop_toTopOf="parent"
-
-        />
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerID"

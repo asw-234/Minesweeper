@@ -13,12 +13,15 @@
     <string name="email">Email</string>
     <string name="welcome_to">Welcome to</string>
     <string name="start_game">Start game</string>
-    <string name="show_leaderboards">Show leaderboards</string>
+    <string name="show_leaderboard">Show leaderboard</string>
     <string name="logout">Logout</string>
     <string name="enter_your_email_address">Enter your email address</string>
     <string name="enter_your_password">Enter your password</string>
     <string name="confirm_your_password">Confirm your password</string>
     <string name="register">Register</string>
     <string name="button_image">Button image</string>
-    <string name="ranking">Ranking</string>
+    <string name="rank">Rank</string>
+    <string name="someone">Someone</string>
+    <string name="score">Score</string>
+    <string name="leaderboard">Leaderboard</string>
 </resources>

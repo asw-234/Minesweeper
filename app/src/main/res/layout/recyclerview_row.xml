@@ -4,37 +4,47 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:padding="10dp"
-    android:background="@color/design_default_color_background">
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/tvRank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rank"
+        android:text="@string/rank"
         android:textColor="#FF3838"
+        android:shadowColor="#EEFF00"
+        android:shadowDy="2"
+        android:shadowRadius="10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="5dp"
         android:padding="5sp"
         android:textSize="20sp"/>
+
     <TextView
         android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Someone"
-        android:textColor="#FF3838"
+        android:text="@string/someone"
+        android:textColor="#FFF"
+        android:shadowColor="#FFC107"
+        android:shadowDy="2"
+        android:shadowRadius="20"
         app:layout_constraintStart_toEndOf="@+id/tvRank"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="5dp"
         android:padding="5sp"
         android:textSize="20sp"/>
+
     <TextView
         android:id="@+id/tvScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Score"
-        android:textColor="#FF3838"
+        android:text="@string/score"
+        android:textColor="#A7EDFF"
+        android:shadowColor="#08C5F4"
+        android:shadowDy="2"
+        android:shadowRadius="20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:padding="5sp"

@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
-        android:text="@string/show_leaderboards"
+        android:text="@string/show_leaderboard"
         android:textSize="10sp"
         android:background="@color/buttonBg"
         android:textColor="#FFF"
