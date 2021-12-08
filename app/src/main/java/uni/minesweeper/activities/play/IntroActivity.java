@@ -17,11 +17,12 @@ import com.ramotion.fluidslider.FluidSlider;
 
 import kotlin.Unit;
 import uni.minesweeper.R;
+import uni.minesweeper.activities.AbstractActivity;
 import uni.minesweeper.activities.RankingActivity;
 import uni.minesweeper.Utils;
 import uni.minesweeper.model.MinesweeperModel;
 
-public class IntroActivity extends AppCompatActivity {
+public class IntroActivity extends AbstractActivity {
 
   private static final int BOARD_MAX_SIZE = 15;
   private static final int BOARD_MIN_SIZE = 5;

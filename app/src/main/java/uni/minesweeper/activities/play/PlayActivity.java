@@ -1,20 +1,20 @@
 package uni.minesweeper.activities.play;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-
 import uni.minesweeper.R;
 import uni.minesweeper.Utils;
-import uni.minesweeper.activities.play.IntroActivity;
+import uni.minesweeper.activities.AbstractActivity;
 import uni.minesweeper.model.MinesweeperModel;
 
-public class PlayActivity extends AppCompatActivity {
+
+public class PlayActivity extends AbstractActivity {
   private boolean isFlagMode = false;
   private MinesweeperModel model = null;
 

@@ -2,7 +2,6 @@ package uni.minesweeper.activities;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,7 +10,7 @@ import uni.minesweeper.adapter.RecyclerAdapter;
 import uni.minesweeper.database.FirebaseManager;
 
 
-public class RankingActivity extends AppCompatActivity {
+public class RankingActivity extends AbstractActivity {
   private RecyclerView recyclerView;
   private RecyclerAdapter recyclerAdapter;
 

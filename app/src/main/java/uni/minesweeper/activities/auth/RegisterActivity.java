@@ -5,15 +5,14 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import uni.minesweeper.activities.MenuActivity;
 import uni.minesweeper.R;
 import uni.minesweeper.Utils;
+import uni.minesweeper.activities.AbstractActivity;
+import uni.minesweeper.activities.MenuActivity;
 import uni.minesweeper.database.FirebaseManager;
 
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AbstractActivity {
   private EditText inputEmail;
   private EditText inputPassword;
   private EditText confirmPwd;

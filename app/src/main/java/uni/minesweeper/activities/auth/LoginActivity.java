@@ -5,14 +5,15 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import uni.minesweeper.activities.MenuActivity;
 import uni.minesweeper.R;
 import uni.minesweeper.Utils;
+import uni.minesweeper.activities.AbstractActivity;
+import uni.minesweeper.activities.MenuActivity;
 import uni.minesweeper.database.FirebaseManager;
+import uni.minesweeper.services.MusicService;
 
-public class LoginActivity extends AppCompatActivity {
+
+public class LoginActivity extends AbstractActivity {
 
   private EditText inputEmail, inputPassword;
 
@@ -20,6 +21,10 @@ public class LoginActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
+
+    if (MusicService.getInstance() != null) {
+      MusicService.getInstance().stop();
+    }
 
     inputEmail = findViewById(R.id.edtLoginEmail);
     inputPassword = findViewById(R.id.edtLoginPwd);
@@ -44,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
           Utils.sendToActivity(this, MenuActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
           Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
         } else {
-          Toast.makeText(LoginActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
+          Toast.makeText(LoginActivity.this, "Invalid email/password", Toast.LENGTH_SHORT).show();
         }
       });
     }
