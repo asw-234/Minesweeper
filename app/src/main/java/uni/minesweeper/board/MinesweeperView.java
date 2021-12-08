@@ -1,4 +1,4 @@
-package uni.minesweeper.view;
+package uni.minesweeper.board;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +20,6 @@ import com.gc.materialdesign.widgets.Dialog;
 import uni.minesweeper.Utils;
 import uni.minesweeper.activities.play.IntroActivity;
 import uni.minesweeper.R;
-import uni.minesweeper.model.MinesweeperModel;
 
 public class MinesweeperView extends View {
   private final Paint linePaint;
@@ -116,9 +115,9 @@ public class MinesweeperView extends View {
         int bottom = (int) ((i + 1) * stepY);
 
         imageBounds.set(left, top, right, bottom);
-        MinesweeperModel.ETileType currTile = model.getTile(i, j);
+        TileType currTile = model.getTile(i, j);
 
-        if (currTile == MinesweeperModel.ETileType.SAFE_CHECKED) {
+        if (currTile == TileType.SAFE_CHECKED) {
           final int coloredPadding = 10;
           left += coloredPadding;
           right -= coloredPadding;
@@ -135,20 +134,20 @@ public class MinesweeperView extends View {
               paintText
             );
           }
-        } else if (currTile == MinesweeperModel.ETileType.BOMB) {
+        } else if (currTile == TileType.BOMB) {
           allBombsFlagged = false;
 
           if (isGameOver) {
             bombDrawable.setBounds(imageBounds);
             bombDrawable.draw(canvas);
           }
-        } else if (currTile == MinesweeperModel.ETileType.BOMB_LOSS) {
+        } else if (currTile == TileType.BOMB_LOSS) {
           bombLossDrawable.setBounds(imageBounds);
           bombLossDrawable.draw(canvas);
-        } else if (currTile == MinesweeperModel.ETileType.FLAG) {
+        } else if (currTile == TileType.FLAG) {
           flagDrawable.setBounds(imageBounds);
           flagDrawable.draw(canvas);
-        } else if (currTile == MinesweeperModel.ETileType.FLAG_LOSS) {
+        } else if (currTile == TileType.FLAG_LOSS) {
           flagLossDrawable.setBounds(imageBounds);
           flagLossDrawable.draw(canvas);
         }
@@ -174,7 +173,7 @@ public class MinesweeperView extends View {
       switch (model.getTile(clickedRow, clickedCol)) {
         case SAFE:
           if (model.isFlagMode()) {
-            model.setTile(clickedRow, clickedCol, MinesweeperModel.ETileType.FLAG_LOSS);
+            model.setTile(clickedRow, clickedCol, TileType.FLAG_LOSS);
             endGame(true);
           } else {
             recursiveExpand(clickedRow, clickedCol);
@@ -183,9 +182,9 @@ public class MinesweeperView extends View {
           break;
         case BOMB:
           if (model.isFlagMode()) {
-            model.setTile(clickedRow, clickedCol, MinesweeperModel.ETileType.FLAG);
+            model.setTile(clickedRow, clickedCol, TileType.FLAG);
           } else {
-            model.setTile(clickedRow, clickedCol, MinesweeperModel.ETileType.BOMB_LOSS);
+            model.setTile(clickedRow, clickedCol, TileType.BOMB_LOSS);
             endGame(true);
           }
 
@@ -199,11 +198,11 @@ public class MinesweeperView extends View {
   }
 
   private void recursiveExpand(int row, int col) {
-    if (model.getTile(row, col) == MinesweeperModel.ETileType.SAFE_CHECKED)
+    if (model.getTile(row, col) == TileType.SAFE_CHECKED)
       return;
 
-    if (model.getTile(row, col) == MinesweeperModel.ETileType.SAFE)
-      model.setTile(row, col, MinesweeperModel.ETileType.SAFE_CHECKED);
+    if (model.getTile(row, col) == TileType.SAFE)
+      model.setTile(row, col, TileType.SAFE_CHECKED);
 
     if (model.getNearbyBombs(row, col) == 0) {
       for (int i = row - 1; i <= row + 1; ++i) {

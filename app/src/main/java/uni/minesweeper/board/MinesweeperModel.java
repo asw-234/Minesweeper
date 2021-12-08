@@ -1,4 +1,4 @@
-package uni.minesweeper.model;
+package uni.minesweeper.board;
 
 import android.util.Log;
 
@@ -11,9 +11,7 @@ public class MinesweeperModel {
   private int totalMines;
   private boolean isFlagMode = false;
 
-  public enum ETileType {SAFE, SAFE_CHECKED, BOMB, FLAG, BOMB_LOSS, FLAG_LOSS}
-
-  private ArrayList<ArrayList<ETileType>> model = null;
+  private ArrayList<ArrayList<TileType>> model = null;
   private ArrayList<ArrayList<Integer>> modelBombIndicators = null;
 
   private MinesweeperModel() {
@@ -38,11 +36,11 @@ public class MinesweeperModel {
 
     // Create board
     for (int i = 0; i < boardSize; ++i) {
-      ArrayList<ETileType> row = new ArrayList<>();
+      ArrayList<TileType> row = new ArrayList<>();
       ArrayList<Integer> bombRow = new ArrayList<>();
 
       for (int j = 0; j < boardSize; ++j) {
-        row.add(ETileType.SAFE);
+        row.add(TileType.SAFE);
         bombRow.add(0);
       }
 
@@ -57,8 +55,8 @@ public class MinesweeperModel {
       int randomRow = (int) (model.size() * Math.random());
       int randomCol = (int) (model.size() * Math.random());
 
-      if (model.get(randomRow).get(randomCol) != ETileType.BOMB) {
-        model.get(randomRow).set(randomCol, ETileType.BOMB);
+      if (model.get(randomRow).get(randomCol) != TileType.BOMB) {
+        model.get(randomRow).set(randomCol, TileType.BOMB);
         --mines;
       }
     }
@@ -81,7 +79,7 @@ public class MinesweeperModel {
         if (j < 0 || j >= modelBombIndicators.size())
           continue;
 
-        if (model.get(i).get(j) == ETileType.BOMB)
+        if (model.get(i).get(j) == TileType.BOMB)
           bombIndicator++;
       }
     }
@@ -94,11 +92,11 @@ public class MinesweeperModel {
   }
 
 
-  public void setTile(int row, int col, ETileType type) {
+  public void setTile(int row, int col, TileType type) {
     model.get(row).set(col, type);
   }
 
-  public ETileType getTile(int row, int col) {
+  public TileType getTile(int row, int col) {
     return model.get(row).get(col);
   }
 

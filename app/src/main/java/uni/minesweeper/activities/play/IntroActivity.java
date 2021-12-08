@@ -18,7 +18,7 @@ import uni.minesweeper.R;
 import uni.minesweeper.Utils;
 import uni.minesweeper.activities.AbstractActivity;
 import uni.minesweeper.activities.RankingActivity;
-import uni.minesweeper.model.MinesweeperModel;
+import uni.minesweeper.board.MinesweeperModel;
 import uni.minesweeper.services.MusicService;
 
 

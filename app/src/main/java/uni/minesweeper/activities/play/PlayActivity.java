@@ -2,16 +2,14 @@ package uni.minesweeper.activities.play;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import uni.minesweeper.R;
 import uni.minesweeper.Utils;
 import uni.minesweeper.activities.AbstractActivity;
-import uni.minesweeper.model.MinesweeperModel;
+import uni.minesweeper.board.MinesweeperModel;
 import uni.minesweeper.services.MusicService;
 
 
