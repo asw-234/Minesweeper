@@ -12,6 +12,7 @@ import uni.minesweeper.R;
 import uni.minesweeper.Utils;
 import uni.minesweeper.activities.AbstractActivity;
 import uni.minesweeper.model.MinesweeperModel;
+import uni.minesweeper.services.MusicService;
 
 
 public class PlayActivity extends AbstractActivity {
@@ -28,6 +29,8 @@ public class PlayActivity extends AbstractActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_play);
+
+    MusicService.getInstance().play(R.raw.excellent_mood, false);
 
     model = MinesweeperModel.getInstance();
     final ToggleButton btnToggleMode = findViewById(R.id.btnToggleMode);
@@ -46,8 +49,13 @@ public class PlayActivity extends AbstractActivity {
       model.setFlagMode(isFlagMode);
     });
 
-    Button btnNewGame = findViewById(R.id.btnNewGame);
+    findViewById(R.id.btnNewGame).setOnClickListener(v ->
+      Utils.sendToActivity(this, IntroActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TOP));
+  }
 
-    btnNewGame.setOnClickListener(v -> Utils.sendToActivity(this, IntroActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TOP));
+  @Override
+  protected void onDestroy() {
+    MusicService.getInstance().play(R.raw.main_theme, false);
+    super.onDestroy();
   }
 }

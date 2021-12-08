@@ -1,6 +1,5 @@
 package uni.minesweeper.activities.play;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,19 +7,20 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.gc.materialdesign.views.ButtonFloat;
-import com.gc.materialdesign.views.ButtonRectangle;
+import com.github.nikartm.button.FitButton;
 import com.ramotion.fluidslider.FluidSlider;
 
 import kotlin.Unit;
 import uni.minesweeper.R;
+import uni.minesweeper.Utils;
 import uni.minesweeper.activities.AbstractActivity;
 import uni.minesweeper.activities.RankingActivity;
-import uni.minesweeper.Utils;
 import uni.minesweeper.model.MinesweeperModel;
+import uni.minesweeper.services.MusicService;
+
 
 public class IntroActivity extends AbstractActivity {
 
@@ -72,7 +72,7 @@ public class IntroActivity extends AbstractActivity {
 
       if (totalMines > boardSize * boardSize) {
         totalMines = boardSize * boardSize;
-        minesTextView.setText(String.valueOf(totalMines));
+        minesTextView.setText(getApplicationContext().getString(R.string.mines, String.valueOf(totalMines)));
       }
 
       return Unit.INSTANCE;
@@ -83,10 +83,11 @@ public class IntroActivity extends AbstractActivity {
     btnDecrease.setOnClickListener(createFloatBtnListener(false));
     btnIncrease.setOnClickListener(createFloatBtnListener(true));
 
-    final ButtonRectangle btnPlay = findViewById(R.id.btnPlay);
+    final FitButton btnPlay = findViewById(R.id.btnPlay);
     final MinesweeperModel model = MinesweeperModel.getInstance();
 
     btnPlay.setOnClickListener(v -> {
+      MusicService.getInstance().play(R.raw.select, true);
       model.setSize(boardSize);
       model.setTotalMines(totalMines);
       model.resetModel();

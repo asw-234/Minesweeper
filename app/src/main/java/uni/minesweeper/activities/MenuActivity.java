@@ -39,14 +39,25 @@ public class MenuActivity extends AbstractActivity {
   }
 
   private void initView() {
-    final MusicService musicInstance = MusicService.getInstance();
-    musicInstance.setLooping(true);
-    musicInstance.playSong(R.raw.main_theme);
-
     setContentView(R.layout.activity_menu);
-    findViewById(R.id.btnPlay).setOnClickListener(view -> Utils.sendToActivity(this, IntroActivity.class, 0));
-    findViewById(R.id.btnLeaderboard).setOnClickListener(view -> Utils.sendToActivity(this, RankingActivity.class, 0));
-    findViewById(R.id.btnLogout).setOnClickListener(view -> logout());
+
+    final MusicService musicInstance = MusicService.getInstance();
+    musicInstance.play(R.raw.main_theme, false);
+
+    findViewById(R.id.btnStartGame).setOnClickListener(view -> {
+      musicInstance.play(R.raw.select, true);
+      Utils.sendToActivity(this, IntroActivity.class, 0);
+    });
+
+    findViewById(R.id.btnLeaderboard).setOnClickListener(view -> {
+      musicInstance.play(R.raw.select, true);
+      Utils.sendToActivity(this, RankingActivity.class, 0);
+    });
+
+    findViewById(R.id.btnLogout).setOnClickListener(view -> {
+      musicInstance.play(R.raw.select, true);
+      logout();
+    });
   }
 
   private void logout() {

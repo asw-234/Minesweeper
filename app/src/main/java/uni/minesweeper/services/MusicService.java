@@ -21,7 +21,9 @@ public class MusicService extends Service  {
 
   private static final String LOGTAG = "MusicService";
   private static MusicService instance;
+
   private MediaPlayer musicPlayer;
+  private MediaPlayer sfxPlayer;
 
   @Override
   public IBinder onBind(final Intent intent) {
@@ -31,16 +33,8 @@ public class MusicService extends Service  {
   @Override
   public void onCreate() {
     super.onCreate();
-    musicPlayer = new MediaPlayer();
-    musicPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
-    musicPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-    musicPlayer.setAudioAttributes(
-      new AudioAttributes.Builder()
-      .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-      .setUsage(AudioAttributes.USAGE_MEDIA)
-      .build()
-    );
+    musicPlayer = buildMusicPlayer(true);
+    sfxPlayer = buildMusicPlayer(false);
 
     instance = this;
     LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(MusicService.INITIALIZED));
@@ -55,7 +49,7 @@ public class MusicService extends Service  {
     return instance;
   }
 
-  public void playSong(final int resourceId) {
+  public void play(final int resourceId, final boolean isSFX) {
     final Resources resources = getResources();
 
     final Uri songUri = new Uri.Builder()
@@ -65,31 +59,56 @@ public class MusicService extends Service  {
       .appendPath(resources.getResourceEntryName(resourceId))
       .build();
 
-    musicPlayer.reset();
+    MediaPlayer player = isSFX ? sfxPlayer : musicPlayer;
+
+    player.reset();
 
     try {
-      musicPlayer.setDataSource(getApplicationContext(), songUri);
-      musicPlayer.prepare();
-      musicPlayer.start();
+      player.setDataSource(getApplicationContext(), songUri);
+      player.prepareAsync();
+      player.setOnPreparedListener(MediaPlayer::start);
     } catch (Exception e) {
       Log.e(LOGTAG, "Error setting data source", e);
     }
   }
 
-  public void setLooping(final boolean looping) {
-    musicPlayer.setLooping(looping);
-  }
-
-  public void resume() {
+  public void resumeBg() {
     musicPlayer.start();
   }
 
-  public void pause() {
+  public void pauseBg() {
     musicPlayer.pause();
   }
 
   public void stop() {
     musicPlayer.reset();
     musicPlayer.stop();
+    sfxPlayer.reset();
+    sfxPlayer.stop();
   }
+
+  public boolean isPlaying() {
+    return musicPlayer.isPlaying() || sfxPlayer.isPlaying();
+  }
+
+  private MediaPlayer buildMusicPlayer(final boolean isLooping) {
+    MediaPlayer player = new MediaPlayer();
+    player.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
+    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+    if (isLooping) {
+      player.setLooping(true);
+      player.setOnCompletionListener(MediaPlayer::start);
+    }
+
+    player.setAudioAttributes(
+      new AudioAttributes.Builder()
+        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+        .setUsage(AudioAttributes.USAGE_MEDIA)
+        .build()
+    );
+
+    return player;
+  }
+
 }

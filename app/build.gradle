@@ -28,6 +28,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+    implementation 'io.github.nikartm:fit-button:2.0.0'
     implementation 'com.github.navasmdc:MaterialDesign:1.5@aar'
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.ramotion.fluidslider:fluid-slider:0.3.1'

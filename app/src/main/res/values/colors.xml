@@ -6,5 +6,6 @@
   <color name="colorBg">#CCCCCC</color>
   <color name="colorPadding">#979696</color>
   <color name="buttonBg">#E64D86B1</color>
+  <color name="buttonText">#FFF</color>
   <color name="textShadow">#E6034A80</color>
 </resources>

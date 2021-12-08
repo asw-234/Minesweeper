@@ -5,6 +5,8 @@ import android.content.Intent;
 
 import java.util.regex.Pattern;
 
+import uni.minesweeper.activities.AbstractActivity;
+
 
 public class Utils {
   private static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(
@@ -20,9 +22,9 @@ public class Utils {
                                         final Class<T> destActivityClass,
                                         final int flags) {
 
+    ((AbstractActivity) context).setIgnorePause(true);
     Intent intent = new Intent(context, destActivityClass);
     intent.setFlags(flags);
-
     context.startActivity(intent);
   }
 }
