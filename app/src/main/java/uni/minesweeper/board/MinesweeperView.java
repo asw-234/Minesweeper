@@ -1,6 +1,8 @@
 package uni.minesweeper.board;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -20,18 +22,24 @@ import com.gc.materialdesign.widgets.Dialog;
 import uni.minesweeper.Utils;
 import uni.minesweeper.activities.play.IntroActivity;
 import uni.minesweeper.R;
+import uni.minesweeper.services.MusicService;
 
 public class MinesweeperView extends View {
+  private static final int MARGIN = 2;
+  private static final int PADDING = 4;
+
   private final Paint linePaint;
   private final Paint backgroundPaint;
-  private final Paint paddingPaint;
   private final Paint paintText;
 
   private final MinesweeperModel model;
 
+  private final Drawable bgBoardDrawable;
+  private final Drawable dirtDrawable;
+  private final Drawable dirtDrawableDark;
+
   private final Drawable bombDrawable;
   private final Drawable bombLossDrawable;
-
   private final Drawable flagDrawable;
   private final Drawable flagLossDrawable;
 
@@ -63,6 +71,10 @@ public class MinesweeperView extends View {
 
     model = MinesweeperModel.getInstance();
 
+    bgBoardDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.bg_board, null);
+    dirtDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_dirt, null);
+    dirtDrawableDark = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_dirt_dark, null);
+
     bombDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_bomb, null);
     bombLossDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_explosion, null);
     flagDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_flag, null);
@@ -78,10 +90,6 @@ public class MinesweeperView extends View {
     backgroundPaint.setColor(ResourcesCompat.getColor(getResources(), R.color.colorBg, null));
     backgroundPaint.setStyle(Paint.Style.FILL);
 
-    paddingPaint = new Paint();
-    paddingPaint.setColor(ResourcesCompat.getColor(getResources(), R.color.colorPadding, null));
-    paddingPaint.setStyle(Paint.Style.FILL);
-
     paintText = new Paint();
     paintText.setColor(Color.LTGRAY);
   }
@@ -90,7 +98,8 @@ public class MinesweeperView extends View {
   @Override
   public void onDraw(Canvas canvas) {
     super.onDraw(canvas);
-    canvas.drawRect(0, 0, getWidth(), getHeight(), backgroundPaint);
+    bgBoardDrawable.setBounds(0,0, getWidth(), getHeight());
+    bgBoardDrawable.draw(canvas);
 
     final int size = model.getBoardSize();
     final float stepX = ((float) getWidth()) / size;
@@ -114,48 +123,70 @@ public class MinesweeperView extends View {
         int top = (int) (i * stepY);
         int bottom = (int) ((i + 1) * stepY);
 
-        imageBounds.set(left, top, right, bottom);
-        TileType currTile = model.getTile(i, j);
+        imageBounds.set(left+MARGIN, top+MARGIN, right-MARGIN, bottom-MARGIN);
 
-        if (currTile == TileType.SAFE_CHECKED) {
-          final int coloredPadding = 10;
-          left += coloredPadding;
-          right -= coloredPadding;
-          top += coloredPadding;
-          bottom -= coloredPadding;
-          imageBounds.set(left, top, right, bottom);
-          canvas.drawRect(imageBounds, paddingPaint);
-
-          if (model.getNearbyBombs(i, j) != 0) {
-            canvas.drawText(
-              String.valueOf(model.getNearbyBombs(i, j)),
-              left + stepX / 4,
-              bottom - stepY / 4,
-              paintText
-            );
+        switch (model.getTile(i, j)) {
+          case SAFE: {
+            dirtDrawable.setBounds(imageBounds);
+            dirtDrawable.draw(canvas);
+            break;
           }
-        } else if (currTile == TileType.BOMB) {
-          allBombsFlagged = false;
-
-          if (isGameOver) {
-            bombDrawable.setBounds(imageBounds);
-            bombDrawable.draw(canvas);
+          case FLAG: {
+            flagDrawable.setBounds(imageBounds);
+            flagDrawable.draw(canvas);
+            break;
           }
-        } else if (currTile == TileType.BOMB_LOSS) {
-          bombLossDrawable.setBounds(imageBounds);
-          bombLossDrawable.draw(canvas);
-        } else if (currTile == TileType.FLAG) {
-          flagDrawable.setBounds(imageBounds);
-          flagDrawable.draw(canvas);
-        } else if (currTile == TileType.FLAG_LOSS) {
-          flagLossDrawable.setBounds(imageBounds);
-          flagLossDrawable.draw(canvas);
+          case FLAG_LOSS: {
+            flagLossDrawable.setBounds(imageBounds);
+            flagLossDrawable.draw(canvas);
+            break;
+          }
+          case BOMB_LOSS: {
+            bombLossDrawable.setBounds(imageBounds);
+            bombLossDrawable.draw(canvas);
+            break;
+          }
+          case BOMB: {
+            allBombsFlagged = false;
+
+            if (isGameOver) {
+              bombDrawable.setBounds(imageBounds);
+              bombDrawable.draw(canvas);
+            } else {
+              dirtDrawable.setBounds(imageBounds);
+              dirtDrawable.draw(canvas);
+            }
+
+            break;
+          }
+          case SAFE_CHECKED: {
+            imageBounds.set(left+PADDING, top+PADDING, right-PADDING, bottom-PADDING);
+            dirtDrawableDark.setBounds(imageBounds);
+            dirtDrawableDark.draw(canvas);
+
+            if (model.getNearbyBombs(i, j) != 0) {
+              final String text = String.valueOf(model.getNearbyBombs(i, j));
+              final float textSize = paintText.measureText(text);
+
+              canvas.drawText(
+                text,
+                imageBounds.centerX() - textSize/2,
+                imageBounds.centerY() + textSize/2,
+                paintText
+              );
+            }
+
+            break;
+          }
         }
       }
     }
 
-    if (!isGameOver && allBombsFlagged)
+    if (!isGameOver && allBombsFlagged) {
+      MusicService.getInstance().stop();
+      MusicService.getInstance().play(R.raw.victory, true);
       endGame(false);
+    }
   }
 
   @Override
@@ -166,29 +197,37 @@ public class MinesweeperView extends View {
 
   @Override
   public boolean onTouchEvent(MotionEvent event) {
-    if (!isGameOver && event.getAction() == MotionEvent.ACTION_UP) {
+    if (!isGameOver && event.getAction() == MotionEvent.ACTION_DOWN) {
       int clickedRow = ((int) event.getY()) / (getHeight() / model.getBoardSize());
       int clickedCol = ((int) event.getX()) / (getWidth() / model.getBoardSize());
 
       switch (model.getTile(clickedRow, clickedCol)) {
-        case SAFE:
+        case SAFE: {
           if (model.isFlagMode()) {
+            MusicService.getInstance().stop();
+            MusicService.getInstance().play(R.raw.flag_loss, true);
             model.setTile(clickedRow, clickedCol, TileType.FLAG_LOSS);
             endGame(true);
           } else {
+            MusicService.getInstance().play(R.raw.dig, true);
             recursiveExpand(clickedRow, clickedCol);
           }
 
           break;
-        case BOMB:
+        }
+        case BOMB: {
           if (model.isFlagMode()) {
+            MusicService.getInstance().play(R.raw.put_flag, true);
             model.setTile(clickedRow, clickedCol, TileType.FLAG);
           } else {
+            MusicService.getInstance().stop();
+            MusicService.getInstance().play(R.raw.explosion, true);
             model.setTile(clickedRow, clickedCol, TileType.BOMB_LOSS);
             endGame(true);
           }
 
           break;
+        }
       }
 
       invalidate();
@@ -198,11 +237,13 @@ public class MinesweeperView extends View {
   }
 
   private void recursiveExpand(int row, int col) {
-    if (model.getTile(row, col) == TileType.SAFE_CHECKED)
+    if (model.getTile(row, col) == TileType.SAFE_CHECKED) {
       return;
+    }
 
-    if (model.getTile(row, col) == TileType.SAFE)
+    if (model.getTile(row, col) == TileType.SAFE) {
       model.setTile(row, col, TileType.SAFE_CHECKED);
+    }
 
     if (model.getNearbyBombs(row, col) == 0) {
       for (int i = row - 1; i <= row + 1; ++i) {
@@ -228,11 +269,15 @@ public class MinesweeperView extends View {
       (isLoss ? "Whoops! You lost!" : "Congratulations! You won the game!") +
         "\n\nPress \"" + buttonText + "\" to start a new game.";
 
-    Dialog dialog = new Dialog(getContext(), "Game Over!", message);
-    dialog.show();
-    dialog.getButtonAccept().setText(buttonText);
-
-    dialog.setOnAcceptButtonClickListener(v ->
-      Utils.sendToActivity(getContext(), IntroActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+    new AlertDialog.Builder(getContext())
+      .setTitle(isLoss ? "Game over!" : "Congratulations!")
+      .setMessage(message)
+      .setCancelable(false)
+      .setPositiveButton(
+        buttonText,
+        (dialogInterface, i) -> Utils.sendToActivity(
+          getContext(), IntroActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK
+        )
+      ).show();
   }
 }

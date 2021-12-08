@@ -101,7 +101,7 @@ public class IntroActivity extends AbstractActivity {
     return view -> {
       totalMines += isIncrease ? 1 : -1;
       totalMines = (totalMines < MINES_MIN) ? MINES_MIN : Math.min(totalMines, boardSize * boardSize);
-      minesTextView.setText(String.valueOf(totalMines));
+      minesTextView.setText(getApplicationContext().getString(R.string.mines, String.valueOf(totalMines)));
     };
   }
 

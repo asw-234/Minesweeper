@@ -99,6 +99,7 @@ public class MusicService extends Service  {
     if (isLooping) {
       player.setLooping(true);
       player.setOnCompletionListener(MediaPlayer::start);
+      player.setVolume(0.7f, 0.7f);
     }
 
     player.setAudioAttributes(
