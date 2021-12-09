@@ -273,11 +273,9 @@ public class MinesweeperView extends View {
       .setTitle(isLoss ? "Game over!" : "Congratulations!")
       .setMessage(message)
       .setCancelable(false)
-      .setPositiveButton(
-        buttonText,
-        (dialogInterface, i) -> Utils.sendToActivity(
-          getContext(), IntroActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK
-        )
-      ).show();
+      .setPositiveButton(buttonText, (dialogInterface, i) ->
+        Utils.sendToActivity(getContext(), IntroActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TOP)
+      )
+      .show();
   }
 }

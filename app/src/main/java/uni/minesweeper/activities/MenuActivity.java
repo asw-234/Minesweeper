@@ -20,6 +20,13 @@ public class MenuActivity extends AbstractActivity {
 
 
   @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    ignorePause = false;
+  }
+
+
+  @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
