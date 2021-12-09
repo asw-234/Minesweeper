@@ -53,7 +53,7 @@ public class PlayActivity extends AbstractActivity {
     btnToggleMode.setTextOff(getApplicationContext().getString(R.string.mode, "CHECK"));
     btnToggleMode.setChecked(isFlagMode);
 
-    btnToggleMode.setOnClickListener(v -> {
+    btnToggleMode.setOnClickListener(view -> {
       isFlagMode = !isFlagMode;
       btnToggleMode.setChecked(isFlagMode);
       model.setFlagMode(isFlagMode);
@@ -86,7 +86,9 @@ public class PlayActivity extends AbstractActivity {
 
         uiThreadHandler.post(() -> {
           timerField.setText(getApplicationContext().getString(
-            R.string.time_left, String.valueOf(minutesMark), String.valueOf(secondsMark)
+            R.string.time_left,
+            String.format("%02d", minutesMark),
+            String.format("%02d", secondsMark)
           ));
 
           if (totalTime-- == 0) {
