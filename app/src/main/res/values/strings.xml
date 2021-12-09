@@ -24,4 +24,5 @@
     <string name="someone">Someone</string>
     <string name="score">Score</string>
     <string name="leaderboard">Leaderboard</string>
+    <string name="time_left">Time left: %1$s:%2$s</string>
 </resources>

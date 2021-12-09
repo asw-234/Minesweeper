@@ -2,7 +2,6 @@ package uni.minesweeper.board;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -16,8 +15,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.core.content.res.ResourcesCompat;
-
-import com.gc.materialdesign.widgets.Dialog;
 
 import uni.minesweeper.Utils;
 import uni.minesweeper.activities.play.IntroActivity;
@@ -205,7 +202,7 @@ public class MinesweeperView extends View {
         case SAFE: {
           if (model.isFlagMode()) {
             MusicService.getInstance().stop();
-            MusicService.getInstance().play(R.raw.flag_loss, true);
+            MusicService.getInstance().play(R.raw.loss, true);
             model.setTile(clickedRow, clickedCol, TileType.FLAG_LOSS);
             endGame(true);
           } else {
@@ -260,7 +257,7 @@ public class MinesweeperView extends View {
     }
   }
 
-  private void endGame(boolean isLoss) {
+  public void endGame(boolean isLoss) {
     isGameOver = true;
 
     final String buttonText = "Play again";

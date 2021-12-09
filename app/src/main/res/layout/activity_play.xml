@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding"
-    android:weightSum="20"
+    android:weightSum="100"
     android:layout_centerVertical="true"
     android:background="@drawable/bg_play">
 
@@ -13,29 +13,39 @@
       android:id="@+id/minesweeperView"
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:layout_weight="19" />
+      android:layout_weight="99" />
 
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_weight="1"
       android:orientation="horizontal"
       android:weightSum="2"
-      android:layout_weight="1"
       tools:ignore="NestedWeights">
 
     <ToggleButton
         android:id="@+id/btnToggleMode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/mode"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:text="@string/mode" />
 
     <Button
         android:id="@+id/btnNewGame"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="@string/new_game"
-        tools:ignore="ButtonStyle"
-        android:layout_weight="1" />
+        tools:ignore="ButtonStyle" />
   </LinearLayout>
+
+  <TextView
+      android:id="@+id/timerView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textAllCaps="true"
+      android:text="@string/time_left"
+      android:textAlignment="center"
+      android:textColor="@color/colorPrimary"
+      android:textStyle="bold" />
 </LinearLayout>
